@@ -16,13 +16,13 @@
       src="https://kit.fontawesome.com/c94b580ac7.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <style>
+      @font-face {
+        font-family: "Atma";
+        src: url("assets/atma-regular.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
       html {
         scroll-behavior: smooth;
       }
@@ -40,7 +40,7 @@
     <!-- nav section -->
     <header id="nav-sect" class="sticky w-full top-0 z-50 hidden">
       <nav>
-        <div class="navbar bg-base-200 shadow-md pr-5">
+        <div class="navbar bg-base-200 border-b border-gray-300 shadow-md pr-5">
           <div class="navbar-start">
             <a class="btn btn-ghost text-xl" href="/">
               English
@@ -257,16 +257,32 @@
       <nav class="absolute right-0 bottom-0">
         <h6 class="footer-title mb-0 text-sm">FOLLOW US</h6>
         <div class="grid grid-flow-col gap-4 text-xl">
-          <a href="www.facebook.com">
+          <a
+            href="https://www.facebook.com/sma.bari.shafin"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fa-brands fa-facebook"></i>
           </a>
-          <a href="www.youtube.com">
+          <a
+            href="https://www.youtube.com/@sma_bari"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fa-brands fa-youtube"></i>
           </a>
-          <a href="www.instagram.com">
+          <a
+            href="https://www.instagram.com/sma.bari.shafin/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fa-brands fa-instagram"></i>
           </a>
-          <a href="www.github.com">
+          <a
+            href="https://github.com/mdazizulbari"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fa-brands fa-github"></i>
           </a>
         </div>

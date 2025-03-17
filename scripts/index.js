@@ -4,66 +4,13 @@ const autoLogin = () => {
   document.getElementById("learn-sect").classList.remove("hidden");
   document.getElementById("faq-sect").classList.remove("hidden");
 };
-// autoLogin();
-// const lessonButtons = () => {
-//   lessonBtnContainer = document.getElementById("lesson-btn-container");
-//   for (let i = 1; i < 8; i++) {
-//     console.log("lesson", i);
-//     const btnDiv = document.createElement("div");
-//     btnDiv.innerHTML = `
-//           <button
-//           id="lesson-btn-${i}"
-//             onclick="loadLessons(${i})"
-//             class="btn lesson-btn-class w-fit border-2 border-cyan-200 hover:bg-cyan-200 transition-all ease-in-out duration-500 rounded-lg mt-4 bg-white font-bold text-lg"
-//           >
-//             <i class="fa-solid fa-book-open"></i>
-//             Lesson - ${i}
-//           </button>
-//     `;
-//     lessonBtnContainer.append(btnDiv);
-//   }
-// };
-// lessonButtons();
-const loadLessonButtons = () => {
-  fetch(`https://openapi.programming-hero.com/api/levels/all`)
-    .then((response) => response.json())
-    .then((data) => displayLessonButtons(data.data))
-    .catch((error) => {
-      Swal.fire({
-        title: "Error fetching data",
-        text: error.message,
-        icon: "error",
-      });
-    });
-};
-loadLessonButtons();
-
-const displayLessonButtons = (buttons) => {
-  // console.log(buttons);
-  lessonBtnContainer = document.getElementById("lesson-btn-container");
-  for (let button of buttons) {
-    const btnDiv = document.createElement("div");
-    btnDiv.innerHTML = `
-          <button
-          id="lesson-btn-${button.level_no}"
-            onclick="loadLessons(${button.level_no})"
-            class="btn lesson-btn-class w-fit border-2 border-cyan-200 hover:bg-cyan-200 transition-all ease-in-out duration-500 rounded-lg mt-4 bg-white font-bold text-lg"
-          >
-            <i class="fa-solid fa-book-open"></i>
-            Lesson - ${button.level_no}
-          </button>
-    `;
-    lessonBtnContainer.append(btnDiv);
-  }
-};
+autoLogin();
 
 const login = () => {
   document.getElementById("login-form").addEventListener("submit", (event) => {
-    console.log(event);
     event.preventDefault();
     const name = document.getElementById("input-name").value.trim();
     const password = document.getElementById("input-pass").value.trim();
-    console.log(name, password);
     if (name === "") {
       Swal.fire({
         title: "Enter your name to login",
@@ -95,6 +42,38 @@ const logout = () => {
   document.getElementById("faq-sect").classList.add("hidden");
 };
 
+const loadLessonButtons = () => {
+  fetch(`https://openapi.programming-hero.com/api/levels/all`)
+    .then((response) => response.json())
+    .then((data) => displayLessonButtons(data.data))
+    .catch((error) => {
+      Swal.fire({
+        title: "Error fetching data",
+        text: error.message,
+        icon: "error",
+      });
+    });
+};
+loadLessonButtons();
+
+const displayLessonButtons = (buttons) => {
+  lessonBtnContainer = document.getElementById("lesson-btn-container");
+  for (let button of buttons) {
+    const btnDiv = document.createElement("div");
+    btnDiv.innerHTML = `
+          <button
+          id="lesson-btn-${button.level_no}"
+            onclick="loadLessons(${button.level_no})"
+            class="btn lesson-btn-class w-fit border-2 border-cyan-200 hover:bg-cyan-200 transition-all ease-in-out duration-500 rounded-lg mt-4 bg-white font-bold text-lg"
+          >
+            <i class="fa-solid fa-book-open"></i>
+            Lesson - ${button.level_no}
+          </button>
+    `;
+    lessonBtnContainer.append(btnDiv);
+  }
+};
+
 const loadLessons = (level) => {
   displayLoadingSpinner();
   //   fetch the data
@@ -107,7 +86,6 @@ const loadLessons = (level) => {
       hideLoadingSpinner();
     })
     .catch((error) => {
-      console.log(error);
       Swal.fire({
         title: "Error fetching data",
         text: error.message,
@@ -121,34 +99,6 @@ const loadLessons = (level) => {
   }
   const lessonBtnId = document.getElementById(`lesson-btn-${level}`);
   lessonBtnId.classList.add("lesson-btn");
-};
-
-const loadInformation = (lessonId) => {
-  const url = `https://openapi.programming-hero.com/api/word/${lessonId}`;
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      displayInformation(data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-      Swal.fire({
-        title: "Error fetching data",
-        text: error.message,
-        icon: "error",
-      });
-    });
-};
-
-const displayLoadingSpinner = () => {
-  // document.getElementById("loading-spinner").style.display = "block";
-  console.log(document.getElementById("loading-spinner"),"string");
-  document.getElementById("loading-spinner").classList.remove("hidden");
-};
-const hideLoadingSpinner = () => {
-  // document.getElementById("loading-spinner").style.display = "none";
-  console.log(document.getElementById("loading-spinner"));
-  document.getElementById("loading-spinner").classList.add("hidden");
 };
 
 const displayLessons = (lessons) => {
@@ -169,17 +119,18 @@ const displayLessons = (lessons) => {
   }
   // loop operation on array of object
   for (let lesson of lessons) {
-    // console.log(lesson);
-    const meaning = lesson.meaning ? lesson.meaning : "Google It";
-    // create element
     const lessonDiv = document.createElement("div");
     lessonDiv.innerHTML = `
             <div
               class="bg-white h-full p-8 flex flex-col gap-3 items-center justify-between rounded-2xl"
             >
-              <h4 class="text-2xl font-bold">${lesson.word}</h4>
+              <h4 class="text-2xl font-bold">${
+                lesson.word || "খুজে পাওয়া যাইনি"
+              }</h4>
               <h5 class="">Meaning / Pronounciation</h5>
-              <h3 class="text-2xl text-center atma-regular">"${meaning} / ${lesson.pronunciation}"</h3>
+              <h3 class="text-2xl text-center atma-regular">"${
+                lesson.meaning || "খুজে পাওয়া যাইনি"
+              } / ${lesson.pronunciation || "খুজে পাওয়া যাইনি"}"</h3>
               <div class="w-full mt-5 flex justify-between text-2xl">
                 <div
                 onclick="loadInformation(${lesson.id})"
@@ -201,34 +152,60 @@ const displayLessons = (lessons) => {
   }
 };
 
+const loadInformation = (lessonId) => {
+  const url = `https://openapi.programming-hero.com/api/word/${lessonId}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      displayInformation(data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+      Swal.fire({
+        title: "Error fetching data",
+        text: error.message,
+        icon: "error",
+      });
+    });
+};
+
 const displayInformation = (information) => {
-  console.log(information);
   document.getElementById("lessonInfo").showModal();
   const infoContainer = document.getElementById("info-container");
-  console.log(infoContainer);
+  const capitalizeFirstLetter = (word) => {
+    if (!word) return "";
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
+  let synonymsHtml = "";
+  if (information.synonyms && information.synonyms.length > 0) {
+    synonymsHtml = information.synonyms
+      .map(
+        (synonym) =>
+          `<span class="btn bg-cyan-200 rounded-lg border-none">${capitalizeFirstLetter(
+            synonym
+          )}</span>`
+      )
+      .join(" ");
+  } else {
+    synonymsHtml = `<span class="text-gray-500">খুজে পাওয়া যাইনি</span>`;
+  }
   infoContainer.innerHTML = `
         <div class="p-8 border-2 border-cyan-100 rounded-lg space-y-2">
           <h3 class="text-4xl font-bold pb-3">
-            ${information.word} (<i class="fa-solid fa-microphone-lines"></i>:${information.pronunciation})
+            ${
+              information.word || "খুজে পাওয়া যাইনি"
+            } (<i class="fa-solid fa-microphone-lines"></i>:${
+    information.pronunciation || "খুজে পাওয়া যাইনি"
+  })
           </h3>
           <h4 class="text-xl font-bold">Meaning</h4>
           <h5 class="text-lg pb-3">${information.meaning}</h5>
           <h4 class="text-xl font-bold">Example</h4>
           <p class="text-lg pb-3">
-          ${information.sentence}
+          ${information.sentence || "খুজে পাওয়া যাইনি"}
           </p>
           <h4 class="text-xl font-bold">সমার্থক শব্দ গুলো</h4>
-          <div class="flex gap-3">
-            <span class="btn bg-cyan-200 rounded-lg border-none"
-              >${information.synonyms[0]}</span
-            >
-            <span class="btn bg-cyan-200 rounded-lg border-none"
-              >${information.synonyms[1]}</span
-            >
-            <span class="btn bg-cyan-200 rounded-lg border-none"
-              >${information.synonyms[2]}</span
-            >
-          </div>
+          <div class="flex gap-3">${synonymsHtml}</div>
         </div>
         <div class="modal-action">
           <form method="dialog">
@@ -240,6 +217,13 @@ const displayInformation = (information) => {
           </form>
         </div>
   `;
+};
+
+const displayLoadingSpinner = () => {
+  document.getElementById("loading-spinner").classList.remove("hidden");
+};
+const hideLoadingSpinner = () => {
+  document.getElementById("loading-spinner").classList.add("hidden");
 };
 
 function pronounceWord(word) {
