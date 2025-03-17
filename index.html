@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>English Janala</title>
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      src="https://kit.fontawesome.com/c94b580ac7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .atma-regular {
+        font-family: "Atma", system-ui;
+        font-weight: 500;
+        font-style: normal;
+      }
+      .lesson-btn {
+        background: oklch(0.917 0.08 205.041);
+      }
+    </style>
+  </head>
+  <body class="relative">
+    <!-- nav section -->
+    <header id="nav-sect" class="sticky w-full top-0 z-50 hidden">
+      <nav>
+        <div class="navbar bg-base-200 shadow-md pr-5">
+          <div class="navbar-start">
+            <a class="btn btn-ghost text-xl" href="/">
+              English
+              <img src="assets/logo.png" alt="" />
+              <span class="atma-regular"> জানালা</span>
+            </a>
+          </div>
+          <div class="navbar-end space-x-3">
+            <a
+              class="btn bg-cyan-200 hover:bg-cyan-300 transition-all ease-in-out duration-400 rounded-lg border-none"
+              href="/#faq-sect"
+            >
+              <i class="fa-solid fa-circle-question"></i>
+              FAQ
+            </a>
+            <a
+              class="btn bg-cyan-200 hover:bg-cyan-300 transition-all ease-in-out duration-400 rounded-lg border-none"
+              href="/#learn-sect"
+            >
+              <i class="fa-solid fa-book-open"></i>
+              Learn
+            </a>
+            <a
+              onclick="logout()"
+              class="btn bg-cyan-200 hover:bg-cyan-300 transition-all ease-in-out duration-400 rounded-lg border-none"
+            >
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Logout
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <!-- hero section -->
+      <section id="hero-sect" class="">
+        <div class="hero bg-base-100 min-h-screen">
+          <div class="hero-content flex-col lg:flex-row-reverse">
+            <img src="assets/hero-student.png" class="max-w-xl rounded-lg" />
+            <div>
+              <h1 class="text-5xl font-bold">
+                <span class="text-cyan-400">English</span> is Easy!!
+              </h1>
+              <p class="py-6 w-10/12 text-xl atma-regular">
+                আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন
+                অথবা আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে
+                নিয়ে যাবে অন্য একটি Level এ
+              </p>
+              <form id="login-form" action="">
+                <fieldset class="fieldset w-xs">
+                  <label class="fieldset-label">Name</label>
+                  <input
+                    id="input-name"
+                    type="text"
+                    class="input"
+                    placeholder="Enter Your Name"
+                  />
+
+                  <label class="fieldset-label">Password</label>
+                  <input
+                    id="input-pass"
+                    type="password"
+                    class="input"
+                    placeholder="Enter Your Password (123456)"
+                  />
+
+                  <button
+                    type="submit"
+                    onclick="login()"
+                    class="btn w-fit bg-cyan-200 hover:bg-cyan-300 transition-all ease-in-out duration-400 rounded-lg mt-4 border-none"
+                  >
+                    Get Started
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- learn section -->
+      <section
+        id="learn-sect"
+        class="hero-content flex flex-col gap-15 mx-auto py-32 hidden"
+      >
+        <h2 class="text-4xl text-center font-bold">
+          <span class="text-cyan-400">Let's</span> Learn Vocabularies
+        </h2>
+        <div
+          id="lesson-btn-container"
+          class="w-full flex justify-center gap-5"
+        ></div>
+        <!-- lessons container -->
+        <div class="bg-base-200 w-full p-5 rounded-3xl">
+          <div id="loading-spinner" class="w-full text-center py-20 hidden">
+            <span class="loading loading-spinner loading-xl"></span>
+          </div>
+          <div id="lessons-container" class="">
+            <div class="flex flex-col justify-center items-center gap-5 py-20">
+              <h5 class="atma-regular">আপনি এখনো কোন Lesson Select করেন নি</h5>
+              <h2 class="text-4xl font-bold atma-regular">
+                একটি <span class="font-sans">Lesson Select</span> করুন
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- faq section -->
+      <section
+        id="faq-sect"
+        class="hero-content flex flex-col gap-15 mx-auto mb-15 hidden"
+      >
+        <h2 class="text-4xl text-center font-bold">
+          <span class="text-cyan-400">Frequently</span> Asked Questions
+        </h2>
+        <div class="w-full space-y-4">
+          <!-- item 1 -->
+          <div class="collapse collapse-plus bg-base-200 rounded-lg">
+            <input type="radio" name="accordion" checked />
+            <div
+              class="collapse-title text-lg font-medium flex justify-between items-center"
+            >
+              1. What's the difference between var, let, and const?
+            </div>
+            <div class="collapse-content">
+              <p>
+                Var is an old keyword which have some unexpected issues, so we
+                should be away from that. Let is a value changeable varriable
+                keyword and const is an unchangeable varriable keyword.
+              </p>
+            </div>
+          </div>
+          <!-- item 2 -->
+          <div class="collapse collapse-plus bg-base-200 rounded-lg">
+            <input type="radio" name="accordion" checked />
+            <div
+              class="collapse-title text-lg font-medium flex justify-between items-center"
+            >
+              2. What's the difference between map(), forEach(), and filter() ?
+            </div>
+            <div class="collapse-content">
+              <p>
+                forEach and filder work just as they sound like, for each is
+                used to do something to each of the input values and filter is
+                used to search up a property or varriable or something similar.
+              </p>
+            </div>
+          </div>
+          <!-- item 3 -->
+          <div class="collapse collapse-plus bg-base-200 rounded-lg">
+            <input type="radio" name="accordion" checked />
+            <div
+              class="collapse-title text-lg font-medium flex justify-between items-center"
+            >
+              3. What's arrow function and how they are different from regular
+              functions?
+            </div>
+            <div class="collapse-content">
+              <p>
+                Arrow functions are always kept in a varriable, it's syntax is
+                more easy to use than the regular function and it's more
+                optimizied than the regular one too.
+              </p>
+            </div>
+          </div>
+          <!-- item 4 -->
+          <div class="collapse collapse-plus bg-base-200 rounded-lg">
+            <input type="radio" name="accordion" checked />
+            <div
+              class="collapse-title text-lg font-medium flex justify-between items-center"
+            >
+              4. How closures work in JavaScript?
+            </div>
+            <div class="collapse-content">
+              <p>I have to review the lesson. I forgot the points.</p>
+            </div>
+          </div>
+          <!-- item 5 -->
+          <div class="collapse collapse-plus bg-base-200 rounded-lg">
+            <input type="radio" name="accordion" checked />
+            <div
+              class="collapse-title text-lg font-medium flex justify-between items-center"
+            >
+              5. How JavaScript Promises work?
+            </div>
+            <div class="collapse-content">
+              <p>
+                When we recieve a promise in JavaScript, we either get the
+                promised thing or we get error, promise runs as async operation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="divider"></div>
+    <!-- footer -->
+    <footer
+      class="footer hero-content mx-auto flex justify-between bg-100 m-15 px-4 p-0 relative"
+    >
+      <aside>
+        <div class="-ml-4 mb-3">
+          <a class="btn btn-ghost text-lg" href="/"
+            >English
+            <img src="assets/logo.png" alt="" />
+            <span class="atma-regular"> জানালা</span>
+          </a>
+        </div>
+        <p>
+          <span class="font-bold atma-regular">ইংরেজি শিখুন সহজে</span>
+          <br />
+          Providing ED-Tech Applications since 2025
+        </p>
+      </aside>
+      <nav class="absolute right-0 bottom-0">
+        <h6 class="footer-title mb-0 text-sm">FOLLOW US</h6>
+        <div class="grid grid-flow-col gap-4 text-xl">
+          <a href="www.facebook.com">
+            <i class="fa-brands fa-facebook"></i>
+          </a>
+          <a href="www.youtube.com">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="www.instagram.com">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="www.github.com">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </nav>
+    </footer>
+    <dialog id="lessonInfo" class="modal">
+      <div id="info-container" class="modal-box"></div>
+    </dialog>
+    <script src="scripts/index.js"></script>
+  </body>
+</html>
